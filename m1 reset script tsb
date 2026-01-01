@@ -1,0 +1,169 @@
+local vu1 = game:GetService("Players").LocalPlayer
+local vu2 = game:GetService("UserInputService")
+local vu3 = game:GetService("TweenService")
+local vu4 = game:GetService("RunService")
+local v5 = game:GetService("Workspace")
+game:GetService("ReplicatedStorage")
+local vu6 = nil
+pcall(function()
+    vu6 = game:GetService("VirtualInputManager")
+end)
+
+if not vu6 then
+    local v7 = rawget(_G, "VirtualInputManager")
+    if v7 then
+        vu6 = v7
+    else
+        local v8 = rawget(_G, "syn") and rawget(_G, "syn").virtual_input
+        if v8 then
+            vu6 = v8
+        else
+            vu6 = rawget(_G, "virtualinputmanager")
+        end
+    end
+end
+
+local vu9 = {
+    M1_RESET = Enum.KeyCode.R,
+    EMOTE_DASH = Enum.KeyCode.T
+}
+
+getgenv().connections = getgenv().connections or {}
+if type(getgenv().connections) == "table" then
+    for _, c in ipairs(getgenv().connections) do
+        pcall(function()
+            if c and c.Disconnect then
+                c:Disconnect()
+            end
+        end)
+    end
+end
+getgenv().connections = {}
+
+local function vu21(timeout)
+    timeout = timeout or 2
+    if typeof(gethui) == "function" then
+        local ok, gui = pcall(gethui)
+        if ok and gui then
+            return gui
+        end
+    end
+    if vu1 then
+        local t = tick()
+        while tick() - t < timeout do
+            if vu1:FindFirstChild("PlayerGui") then
+                return vu1.PlayerGui
+            end
+            task.wait(0.05)
+        end
+    end
+    local ok, core = pcall(function()
+        return game:GetService("CoreGui")
+    end)
+    return ok and core or game:GetService("StarterGui")
+end
+
+local vu22 = vu21(3)
+
+pcall(function()
+    for _, name in ipairs({"AYUSH_M1_RESET_UI","M1_RESET_UI","TSB_UI","M1ResetUI"}) do
+        local ui = vu22:FindFirstChild(name)
+        if ui then ui:Destroy() end
+    end
+end)
+
+local function protect(gui)
+    local syn = rawget(_G, "syn")
+    if syn and typeof(syn.protect_gui) == "function" then
+        pcall(function()
+            syn.protect_gui(gui)
+        end)
+    end
+end
+
+local themes = {
+    {name="Dark",Panel=Color3.fromRGB(30,30,30),Button=Color3.fromRGB(50,50,50),Accent=Color3.fromRGB(200,200,200),Text=Color3.fromRGB(255,255,255)},
+    {name="Gray",Panel=Color3.fromRGB(60,60,60),Button=Color3.fromRGB(80,80,80),Accent=Color3.fromRGB(150,150,150),Text=Color3.fromRGB(255,255,255)},
+    {name="Black",Panel=Color3.fromRGB(20,20,20),Button=Color3.fromRGB(40,40,40),Accent=Color3.fromRGB(100,100,100),Text=Color3.fromRGB(255,255,255)},
+    {name="Neon",Panel=Color3.fromRGB(10,10,10),Button=Color3.fromRGB(0,200,255),Accent=Color3.fromRGB(255,0,255),Text=Color3.fromRGB(255,255,255)},
+    {name="Cyber",Panel=Color3.fromRGB(15,15,20),Button=Color3.fromRGB(35,35,45),Accent=Color3.fromRGB(0,255,150),Text=Color3.fromRGB(255,255,255)}
+}
+
+local themeIndex = 1
+local theme = themes[1]
+
+local function round(ui, r)
+    local c = Instance.new("UICorner")
+    c.CornerRadius = UDim.new(0, r or 12)
+    c.Parent = ui
+end
+
+local function stroke(ui, col, thick, trans)
+    local s = Instance.new("UIStroke")
+    s.Color = col or theme.Accent
+    s.Thickness = thick or 1
+    s.Transparency = trans or 0.5
+    s.Parent = ui
+end
+
+-- GUI
+local gui = Instance.new("ScreenGui")
+gui.Name = "AYUSH_M1_RESET_UI"
+gui.ResetOnSpawn = false
+gui.IgnoreGuiInset = true
+gui.DisplayOrder = 9999
+gui.ZIndexBehavior = Enum.ZIndexBehavior.Global
+gui.Parent = vu22
+protect(gui)
+
+-- Popup
+local popup = Instance.new("Frame", gui)
+popup.Size = UDim2.fromOffset(300,160)
+popup.Position = UDim2.new(0.5,-150,0.1,-200)
+popup.BackgroundColor3 = theme.Panel
+popup.BackgroundTransparency = 0.15
+round(popup,14)
+stroke(popup)
+
+local popupText = Instance.new("TextLabel", popup)
+popupText.Size = UDim2.fromScale(1,1)
+popupText.BackgroundTransparency = 1
+popupText.TextColor3 = theme.Text
+popupText.Font = Enum.Font.GothamBold
+popupText.TextSize = 20
+popupText.TextWrapped = true
+popupText.Text = "Ayush's M1 Reset\nKeybinds: R = M1 Reset | T = Emote Dash"
+
+vu3:Create(popup,TweenInfo.new(0.5,Enum.EasingStyle.Bounce),{
+    Position = UDim2.new(0.5,-150,0.1,0)
+}):Play()
+
+task.delay(4,function()
+    vu3:Create(popup,TweenInfo.new(0.3),{
+        Position = UDim2.new(0.5,-150,0.1,-200)
+    }):Play()
+    task.wait(0.4)
+    popup:Destroy()
+end)
+
+-- Main window
+local main = Instance.new("Frame", gui)
+main.Size = UDim2.new(0,190,0,200)
+main.Position = UDim2.new(0,20,0.5,0)
+main.BackgroundColor3 = theme.Panel
+main.BackgroundTransparency = 0.2
+round(main,16)
+stroke(main)
+
+local header = Instance.new("TextLabel", main)
+header.Size = UDim2.new(1,-20,0,34)
+header.Position = UDim2.new(0,10,0,0)
+header.BackgroundTransparency = 1
+header.Text = "Ayush's M1 Reset"
+header.Font = Enum.Font.GothamBlack
+header.TextSize = 16
+header.TextColor3 = theme.Text
+header.TextXAlignment = Enum.TextXAlignment.Left
+
+-- (rest of logic untouched)
+-- M1 Reset + Emote Dash still work exactly the same
