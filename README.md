@@ -3,6 +3,12 @@
 M1 Reset script for **The Strongest Battlegrounds** on Roblox.  
 Helps maintain smoother combos and better combat flow.
 
+
+## Script
+```lua
+loadstring(game:HttpGet('https://raw.githubusercontent.com/thedanyon/Scripts-Roblox/refs/heads/main/m1%20reset%20script%20tsb'))()
+```
+
 ## Usage
 
 Paste and execute the script below using your Roblox executor while in-game.
@@ -24,5 +30,3 @@ For educational and testing purposes only
 
 Script by thedanyon
 
-```lua
-loadstring(game:HttpGet('https://raw.githubusercontent.com/thedanyon/Scripts-Roblox/refs/heads/main/m1%20reset%20script%20tsb'))()
