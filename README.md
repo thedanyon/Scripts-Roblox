@@ -1,8 +1,7 @@
 # Roblox TSB M1 Reset Script
 
-M1 Reset script for **The Strongest Battlegrounds** on Roblox.  
-Helps maintain smoother combos and better combat flow.
-
+M1 Reset script for **The Strongest Battlegrounds** on Roblox. 
+Be careful while using it because it's a banned tech.
 
 ## Script
 ```lua
