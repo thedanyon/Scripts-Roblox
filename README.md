@@ -16,7 +16,10 @@ Paste and execute the script below using your Roblox executor while in-game.
 ## Features
 
 Key Bind "R" for M1 reset
+
 Key Bind "T" for Emote dash
+
+No requirements for ping or device just skills ig
 
 ## Disclaimer
 
